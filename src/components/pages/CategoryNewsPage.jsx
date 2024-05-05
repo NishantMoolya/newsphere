@@ -9,6 +9,7 @@ const CategoryNewsPage = ({ country,search }) => {
     const params = useParams();
 
     useEffect(() => {
+        setIsLoading(true);
         const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${params.category}&pageSize=${30}&q=${search}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
         fetch(url).then(res => res.json())
         .then(data => { if (data.articles)setArticles([...data.articles]) })

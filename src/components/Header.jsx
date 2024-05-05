@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import Spinner from './Spinner';
 
 const Header = ({ country }) => {
   const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
+    setIsLoading(true);
     const url = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
     fetch(url).then(res => res.json()).then(data =>{
       let arr = [];
@@ -19,10 +23,12 @@ const Header = ({ country }) => {
       }
        setImages(arr);
       })
-    .catch(err => console.log(`an error in getting news:${err}`));
+    .catch(err => console.log(`an error in getting news:${err}`))
+    .finally(() => setIsLoading(false));
   },[country]);
   return (
-    <div id="carouselExampleCaptions" class="carousel slide">
+    <>
+    {isLoading?<div style={{ height:"50vh",display:'flex',alignItems:'center',justifyContent:'center'}}><Spinner /></div>:images.length !== 0?<div id="carouselExampleCaptions" class="carousel slide">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -68,7 +74,8 @@ const Header = ({ country }) => {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</div>:<div style={{ height:"50vh",display:'flex',alignItems:'center',justifyContent:'center'}}>No results found</div>}
+    </>
   )
 }
 
