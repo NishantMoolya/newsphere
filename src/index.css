@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.carousel .carousel-item {
+  max-height:550px;
+}
+
+.carousel-item img {
+  object-fit:cover;
+  max-height:550px;
+}
+
+.line-clamp{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
